@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ficha | Casa Lúmen RPG</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main class="ficha">
+
+<!-- Link para a página principal -->
+<a
+    href="index.html"
+    class="logo-casa-lumen"
+>Casa Lúmen</a>
+
+    <h1>Ficha de Personagem</h1>
+
+    <!-- NAVEGAÇÃO DA FICHA -->
+
+    <!-- Voltar para a lista de personagens -->
+    <a
+        href="minhas-fichas.html"
+        class="botao-voltar-fichas"
+    >
+        ← Minhas Fichas
+    </a>
+        
+                <!-- SALVAMENTO DA FICHA -->
+<div class="salvamento">
+                <!-- Botão para salvar -->
+    <button onclick="salvarFicha()">
+        Salvar Ficha
+    </button>
+
+                <!-- Aviso de salvamento -->
+    <span id="status-salvamento"></span>
+
+</div>
+
+                <!-- INFORMAÇÕES DO PERSONAGEM -->
+<section class="informacoes">
+
+    <!-- Nome do personagem -->
+    <div class="campo">
+        <label for="nome">Nome do personagem</label>
+        <input type="text" id="nome">
+    </div>
+
+    <!-- Nome do jogador -->
+    <div class="campo">
+        <label for="jogador">Jogador</label>
+        <input type="text" id="jogador">
+    </div>
+
+    <!-- Idade -->
+    <div class="campo">
+        <label for="idade">Idade</label>
+        <input type="number" id="idade">
+    </div>
+
+    <!-- Nível -->
+    <div class="campo">
+        <label for="nivel">Nível</label>
+        <input type="number" id="nivel" value="1" min="1">
+    </div>
+
+</section>
+
+
+                <!-- LÚMEN E LEGADO -->
+<section class="lumen-legado">
+
+    <h2>Lúmen e Legado</h2>
+
+    <div class="campos-lumen">
+
+        <!-- Aspecto -->
+        <div class="campo">
+            <label for="aspecto">Aspectos</label>
+
+            <input
+                type="text"
+                id="aspecto"
+                placeholder="Digite os Aspectos"
+            >
+        </div>
+
+        <!-- Legado -->
+        <div class="campo">
+            <label for="legado">Legado</label>
+
+            <input
+                type="text"
+                id="legado"
+                placeholder="Digite o Legado"
+            >
+        </div>
+
+    </div>
+
+</section>
+
+
+                <!-- Atributos -->
+        <section class="atributos">
+
+            <h2>Atributos</h2>
+
+            <div class="lista-atributos">
+
+                <div class="atributo">
+                    <label for="atributo1">Corpo</label>
+                    <input 
+                        type="number" 
+                        id="atributo1" 
+                        value="0"
+                        oninput="calcularVida()">
+                    <button onclick="rolarDado('atributo1')">Rolar</button>
+                </div>
+
+                <div class="atributo">
+                    <label for="atributo2">Mente</label>
+                    <input type="number" id="atributo2" value="0">
+                    <button onclick="rolarDado('atributo2')">Rolar</button>
+                </div>
+
+                <div class="atributo">
+                    <label for="atributo3">Presença</label>
+                    <input type="number" id="atributo3" value="0">
+                    <button onclick="rolarDado('atributo3')">Rolar</button>
+                </div>
+
+                <div class="atributo">
+                    <label for="atributo4">Lúmen</label>
+                    <input type="number" id="atributo4" value="0">
+                    <button onclick="rolarDado('atributo4')">Rolar</button>
+                </div>
+
+                <div class="atributo">
+                    <label for="atributo5">Pulso</label>
+                    <input type="number" id="atributo5" value="0">
+                    <button onclick="rolarDado('atributo5')">Rolar</button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+                <!-- Resultado das rolagens -->
+        <div class="resultado-rolagem">
+
+            <h3>Resultado</h3>
+
+            <p id="resultado">
+                Nenhuma rolagem realizada.
+            </p>
+
+            <p id="detalhes-rolagem"></p>
+
+        </div>
+
+                <!-- Pontos de Vida -->
+        <section class="vida">
+            <h2>Pontos de Vida</h2>
+
+    <div class="controle-vida">
+
+        <button onclick="alterarVida(-1)">−</button>
+
+            <span id="vida-atual">0</span>
+            <span>/</span>
+            <span id="vida-maxima">0</span>
+
+        <button onclick="alterarVida(1)">+</button>
+
+    </div>
+
+</section>
+
+                <!-- Perícias -->
+<section class="pericias">
+
+    <h2>Perícias</h2>
+
+    <div class="lista-pericias">
+
+        <div class="pericia">
+            <span>Acrobacia</span>
+            <input type="number" id="acrobacia" value="0">
+            <button onclick="rolarPericia('acrobacia')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Atletismo</span>
+            <input type="number" id="atletismo" value="0">
+            <button onclick="rolarPericia('atletismo')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Autocontrole</span>
+            <input type="number" id="autocontrole" value="0">
+            <button onclick="rolarPericia('autocontrole')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Combate Corpo a Corpo</span>
+            <input type="number" id="combate-corpo-a-corpo" value="0">
+            <button onclick="rolarPericia('combate-corpo-a-corpo')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Concentração</span>
+            <input type="number" id="concentracao" value="0">
+            <button onclick="rolarPericia('concentracao')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Condução Arcana</span>
+            <input type="number" id="conducao-arcana" value="0">
+            <button onclick="rolarPericia('conducao-arcana')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Condução de Legado</span>
+            <input type="number" id="conducao-legado" value="0">
+            <button onclick="rolarPericia('conducao-legado')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Conhecimento Arcano</span>
+            <input type="number" id="conhecimento-arcano" value="0">
+            <button onclick="rolarPericia('conhecimento-arcano')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Controle de Aspecto</span>
+            <input type="number" id="controle-aspecto" value="0">
+            <button onclick="rolarPericia('controle-aspecto')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Coragem</span>
+            <input type="number" id="coragem" value="0">
+            <button onclick="rolarPericia('coragem')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Determinação</span>
+            <input type="number" id="determinacao" value="0">
+            <button onclick="rolarPericia('determinacao')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Diplomacia</span>
+            <input type="number" id="diplomacia" value="0">
+            <button onclick="rolarPericia('diplomacia')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Empatia</span>
+            <input type="number" id="empatia" value="0">
+            <button onclick="rolarPericia('empatia')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Enganação</span>
+            <input type="number" id="enganacao" value="0">
+            <button onclick="rolarPericia('enganacao')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Estratégia</span>
+            <input type="number" id="estrategia" value="0">
+            <button onclick="rolarPericia('estrategia')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Furtividade</span>
+            <input type="number" id="furtividade" value="0">
+            <button onclick="rolarPericia('furtividade')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>História da Phúlma</span>
+            <input type="number" id="historia-phulma" value="0">
+            <button onclick="rolarPericia('historia-phulma')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Intimidação</span>
+            <input type="number" id="intimidacao" value="0">
+            <button onclick="rolarPericia('intimidacao')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Investigação</span>
+            <input type="number" id="investigacao" value="0">
+            <button onclick="rolarPericia('investigacao')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Liderança</span>
+            <input type="number" id="lideranca" value="0">
+            <button onclick="rolarPericia('lideranca')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Medicina Arcana</span>
+            <input type="number" id="medicina-arcana" value="0">
+            <button onclick="rolarPericia('medicina-arcana')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Navegação Phúlmica</span>
+            <input type="number" id="navegacao-phulmica" value="0">
+            <button onclick="rolarPericia('navegacao-phulmica')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Observação</span>
+            <input type="number" id="observacao" value="0">
+            <button onclick="rolarPericia('observacao')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Performance</span>
+            <input type="number" id="performance" value="0">
+            <button onclick="rolarPericia('performance')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Pontaria</span>
+            <input type="number" id="pontaria" value="0">
+            <button onclick="rolarPericia('pontaria')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Relíquias</span>
+            <input type="number" id="reliquias" value="0">
+            <button onclick="rolarPericia('reliquias')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Resistência</span>
+            <input type="number" id="resistencia" value="0">
+            <button onclick="rolarPericia('resistencia')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Resistência à Corrupção</span>
+            <input type="number" id="resistencia-corrupcao" value="0">
+            <button onclick="rolarPericia('resistencia-corrupcao')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Runas e Selos</span>
+            <input type="number" id="runas-selos" value="0">
+            <button onclick="rolarPericia('runas-selos')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Sensibilidade Phúlmica</span>
+            <input type="number" id="sensibilidade-phulmica" value="0">
+            <button onclick="rolarPericia('sensibilidade-phulmica')">Rolar</button>
+        </div>
+
+        <div class="pericia">
+            <span>Vínculo Emocional</span>
+            <input type="number" id="vinculo-emocional" value="0">
+            <button onclick="rolarPericia('vinculo-emocional')">Rolar</button>
+        </div>
+
+    </div>
+
+</section>
+
+                <!-- ROLAGEM COMBINADA -->
+<section class="rolagem-combinada">
+
+    <h2>Rolagem Combinada</h2>
+
+    <div class="opcoes-rolagem">
+
+        <!-- Seleção de perícia -->
+        <div class="campo-rolagem">
+
+            <label for="pericia-selecionada">Perícia</label>
+
+            <select id="pericia-selecionada">
+
+                <option value="">Nenhuma</option>
+
+                <option value="acrobacia">Acrobacia</option>
+                <option value="atletismo">Atletismo</option>
+                <option value="autocontrole">Autocontrole</option>
+                <option value="combate-corpo-a-corpo">Combate Corpo a Corpo</option>
+                <option value="concentracao">Concentração</option>
+                <option value="conducao-arcana">Condução Arcana</option>
+                <option value="conducao-legado">Condução de Legado</option>
+                <option value="conhecimento-arcano">Conhecimento Arcano</option>
+                <option value="controle-aspecto">Controle de Aspecto</option>
+                <option value="coragem">Coragem</option>
+                <option value="determinacao">Determinação</option>
+                <option value="diplomacia">Diplomacia</option>
+                <option value="empatia">Empatia</option>
+                <option value="enganacao">Enganação</option>
+                <option value="estrategia">Estratégia</option>
+                <option value="furtividade">Furtividade</option>
+                <option value="historia-phulma">História da Phúlma</option>
+                <option value="intimidacao">Intimidação</option>
+                <option value="investigacao">Investigação</option>
+                <option value="lideranca">Liderança</option>
+                <option value="medicina-arcana">Medicina Arcana</option>
+                <option value="navegacao-phulmica">Navegação Phúlmica</option>
+                <option value="observacao">Observação</option>
+                <option value="performance">Performance</option>
+                <option value="pontaria">Pontaria</option>
+                <option value="reliquias">Relíquias</option>
+                <option value="resistencia">Resistência</option>
+                <option value="resistencia-corrupcao">Resistência à Corrupção</option>
+                <option value="runas-selos">Runas e Selos</option>
+                <option value="sensibilidade-phulmica">Sensibilidade Phúlmica</option>
+                <option value="vinculo-emocional">Vínculo Emocional</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- Seleção de atributo -->
+        <div class="campo-rolagem">
+
+            <label for="atributo-selecionado">Atributo</label>
+
+            <select id="atributo-selecionado">
+
+                <option value="">Nenhum</option>
+                <option value="atributo1">Corpo</option>
+                <option value="atributo2">Mente</option>
+                <option value="atributo3">Presença</option>
+                <option value="atributo4">Lúmen</option>
+                <option value="atributo5">Pulso</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <!-- Botão da rolagem -->
+    <button class="botao-rolagem-combinada" onclick="rolarCombinado()">
+        Rolar
+    </button>
+
+</section>
+
+<!-- PODERES E MAGIAS -->
+<section class="poderes">
+
+    <h2>Poderes e Magias</h2>
+
+    <!-- Lista onde os poderes serão adicionados -->
+    <div id="lista-poderes"></div>
+
+    <!-- Botão para criar um novo poder -->
+    <button
+        class="botao-adicionar-poder"
+        onclick="adicionarPoder()"
+    >
+        + Adicionar Poder
+    </button>
+
+</section>
+
+<!-- INVENTÁRIO -->
+<section class="inventario">
+
+    <h2>Inventário</h2>
+
+    <!-- Lista onde os itens serão adicionados -->
+    <div id="lista-itens"></div>
+
+    <!-- Botão para adicionar um novo item -->
+    <button
+        class="botao-adicionar-item"
+        onclick="adicionarItem()"
+    >+ Adicionar Item</button>
+
+</section>
+
+    </main>
+
+    <!-- JavaScript -->
+    <script src="js/ficha.js"></script>
+
+</body>
+
+</html>
