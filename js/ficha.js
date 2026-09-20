@@ -93,6 +93,103 @@ function alterarVida(valor) {
     ).textContent = vidaAtual;
 }
 
+/* =========================
+PONTOS DE LÚMEN
+========================= */
+
+// Guarda os Pontos de Lúmen atuais
+let lumenAtual = 0;
+
+// Guarda os Pontos de Lúmen máximos
+let lumenMaximo = 0;
+
+
+/* =========================
+CALCULAR LÚMEN
+========================= */
+
+function calcularLumen() {
+
+    // Pega o valor do atributo Lúmen
+    let atributo4 = Number(
+        document.getElementById("atributo4").value
+    );
+
+    // Calcula Lúmen × 10
+    lumenMaximo = atributo4 * 10;
+
+    // Coloca os Pontos de Lúmen atuais no máximo
+    lumenAtual = lumenMaximo;
+
+    // Mostra o Lúmen atual
+    document.getElementById(
+        "lumen-atual"
+    ).textContent = lumenAtual;
+
+    // Mostra o Lúmen máximo
+    document.getElementById(
+        "lumen-maximo"
+    ).textContent = lumenMaximo;
+}
+
+
+/* =========================
+ALTERAR LÚMEN
+========================= */
+
+function alterarLumen(valor) {
+
+    // Soma ou diminui os Pontos de Lúmen
+    lumenAtual = lumenAtual + valor;
+
+    // Impede Lúmen abaixo de zero
+    if (lumenAtual < 0) {
+        lumenAtual = 0;
+    }
+
+    // Impede Lúmen acima do máximo
+    if (lumenAtual > lumenMaximo) {
+        lumenAtual = lumenMaximo;
+    }
+
+    // Atualiza o Lúmen mostrado
+    document.getElementById(
+        "lumen-atual"
+    ).textContent = lumenAtual;
+}
+
+/* =========================
+PONTOS DE TENSÃO
+========================= */
+
+// Guarda os Pontos de Tensão atuais
+let tensaoAtual = 0;
+
+
+/* =========================
+ALTERAR TENSÃO
+========================= */
+
+function alterarTensao(valor) {
+
+    // Soma ou diminui os Pontos de Tensão
+    tensaoAtual = tensaoAtual + valor;
+
+    // Impede a Tensão de ficar abaixo de zero
+    if (tensaoAtual < 0) {
+        tensaoAtual = 0;
+    }
+
+    // Impede a Tensão de passar de 10
+    if (tensaoAtual > 10) {
+        tensaoAtual = 10;
+    }
+
+    // Atualiza a Tensão mostrada na ficha
+    document.getElementById(
+        "tensao-atual"
+    ).textContent = tensaoAtual;
+}
 
 /* =========================
 PERÍCIAS
@@ -418,6 +515,21 @@ function salvarFicha() {
     // Guarda os PV atuais
     dadosFicha.vidaAtual =
         vidaAtual;
+
+/* =========================
+    SALVAR PONTOS DE LÚMEN
+========================= */
+
+// Salva a quantidade atual de Pontos de Lúmen
+dadosFicha.lumenAtual = lumenAtual;
+
+
+/* =========================
+    SALVAR PONTOS DE TENSÃO
+========================= */
+
+// Salva a quantidade atual de Pontos de Tensão
+dadosFicha.tensaoAtual = tensaoAtual;
 
     /* =========================
     SALVAR PODERES E MAGIAS
@@ -826,6 +938,63 @@ function carregarPersonagem() {
         ).textContent =
             vidaAtual;
     }
+
+/* =========================
+CARREGAR PONTOS DE LÚMEN
+========================= */
+
+// Calcula o máximo com base no atributo Lúmen
+calcularLumen();
+
+// Recupera os Pontos de Lúmen que estavam salvos
+if (personagem.lumenAtual !== undefined) {
+
+    lumenAtual = Number(personagem.lumenAtual);
+
+    // Impede Lúmen abaixo de zero
+    if (lumenAtual < 0) {
+        lumenAtual = 0;
+    }
+
+    // Impede Lúmen acima do máximo
+    if (lumenAtual > lumenMaximo) {
+        lumenAtual = lumenMaximo;
+    }
+
+    // Mostra o valor salvo
+    document.getElementById(
+        "lumen-atual"
+    ).textContent = lumenAtual;
+}
+
+
+/* =========================
+CARREGAR PONTOS DE TENSÃO
+========================= */
+
+// Começa em zero caso seja uma ficha antiga
+tensaoAtual = 0;
+
+// Recupera a Tensão que estava salva
+if (personagem.tensaoAtual !== undefined) {
+
+    tensaoAtual = Number(personagem.tensaoAtual);
+
+    // Impede Tensão abaixo de zero
+    if (tensaoAtual < 0) {
+        tensaoAtual = 0;
+    }
+
+    // Impede Tensão acima de 10
+    if (tensaoAtual > 10) {
+        tensaoAtual = 10;
+    }
+}
+
+// Mostra a Tensão atual
+document.getElementById(
+    "tensao-atual"
+).textContent = tensaoAtual;
 
     /* =========================
     CARREGAR PODERES E MAGIAS

@@ -139,7 +139,8 @@
 
                 <div class="atributo">
                     <label for="atributo4">Lúmen</label>
-                    <input type="number" id="atributo4" value="0">
+                    <!-- Recalcula os Pontos de Lúmen quando o atributo for alterado -->
+                    <input type="number" id="atributo4" value="0" oninput="calcularLumen()">
                     <button onclick="rolarDado('atributo4')">Rolar</button>
                 </div>
 
@@ -167,21 +168,68 @@
 
         </div>
 
-                <!-- Pontos de Vida -->
-        <section class="vida">
-            <h2>Pontos de Vida</h2>
+                <!-- PONTOS DE VIDA, LÚMEN E TENSÃO -->
+
+<!-- Pontos de Vida -->
+<section class="vida">
+    <h2>Pontos de Vida</h2>
 
     <div class="controle-vida">
 
+        <!-- Diminuir Vida -->
         <button onclick="alterarVida(-1)">−</button>
 
-            <span id="vida-atual">0</span>
-            <span>/</span>
-            <span id="vida-maxima">0</span>
+        <!-- Vida atual e máxima -->
+        <span id="vida-atual">0</span>
+        <span>/</span>
+        <span id="vida-maxima">0</span>
 
+        <!-- Aumentar Vida -->
         <button onclick="alterarVida(1)">+</button>
 
     </div>
+</section>
+
+
+<!-- PONTOS DE LÚMEN -->
+
+<section class="lumen-pontos">
+    <h2>Pontos de Lúmen</h2>
+
+    <div class="controle-lumen">
+
+        <!-- Diminuir Lúmen -->
+        <button onclick="alterarLumen(-1)">−</button>
+
+        <!-- Lúmen atual e máximo -->
+        <span id="lumen-atual">0</span>
+        <span>/</span>
+        <span id="lumen-maximo">0</span>
+
+        <!-- Aumentar Lúmen -->
+        <button onclick="alterarLumen(1)">+</button>
+
+    </div>
+</section>
+
+
+<!-- PONTOS DE TENSÃO -->
+<section class="tensao">
+    <h2>Pontos de Tensão</h2>
+
+    <div class="controle-tensao">
+
+        <!-- Diminuir Tensão -->
+        <button onclick="alterarTensao(-1)">−</button>
+
+        <!-- Tensão atual -->
+        <span id="tensao-atual">0</span>
+
+        <!-- Aumentar Tensão -->
+        <button onclick="alterarTensao(1)">+</button>
+
+    </div>
+</section>
 
 </section>
 
