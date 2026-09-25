@@ -71,49 +71,106 @@
         </div>
 
 
-        <!-- IMAGENS -->
-        <div class="galeria-ficha">
+       <!-- =========================
+     IMAGENS DA FICHA
+========================= -->
+
+<div class="galeria-ficha">
+
+    <!-- FOTO DO PERSONAGEM -->
+    <div class="foto-ficha-container">
+
+        <p class="titulo-foto">
+            FOTO DO PERSONAGEM
+        </p>
+
+        <label
+            for="input-foto-personagem"
+            class="moldura-foto"
+        >
+
+            <!-- Imagem -->
+            <img
+                id="foto-personagem"
+                alt=""
+                style="display: none;"
+            >
+
+            <!-- Texto enquanto não houver imagem -->
+            <span id="texto-foto-personagem">
+                + Adicionar imagem
+            </span>
+
+        </label>
+
+        <!-- Input escondido -->
+        <input
+            type="file"
+            id="input-foto-personagem"
+            accept="image/*"
+            hidden
+        >
+
+        <!-- Remover -->
+        <button
+            type="button"
+            id="remover-foto-personagem"
+            class="remover-foto"
+            style="display: none;"
+        >
+            Remover
+        </button>
+
+    </div>
 
 
-            <!-- Foto do personagem -->
-            <div class="foto-ficha-container">
+    <!-- FOTO DO LEGADO -->
+    <div class="foto-ficha-container">
 
-                <p class="titulo-foto">
-                    FOTO DO PERSONAGEM
-                </p>
+        <p class="titulo-foto">
+            FOTO DO LEGADO
+        </p>
 
-                <label
-                    for="input-foto-personagem"
-                    class="moldura-foto"
-                >
+        <label
+            for="input-foto-legado"
+            class="moldura-foto"
+        >
 
-                    <img
-                        id="foto-personagem"
-                        alt="Foto do personagem"
-                    >
+            <!-- Imagem -->
+            <img
+                id="foto-legado"
+                alt=""
+                style="display: none;"
+            >
 
-                    <span id="texto-foto-personagem">
-                        + Adicionar imagem
-                    </span>
+            <!-- Texto enquanto não houver imagem -->
+            <span id="texto-foto-legado">
+                + Adicionar imagem
+            </span>
 
-                </label>
+        </label>
 
-                <input
-                    type="file"
-                    id="input-foto-personagem"
-                    accept="image/*"
-                    hidden
-                >
+        <!-- Input escondido -->
+        <input
+            type="file"
+            id="input-foto-legado"
+            accept="image/*"
+            hidden
+        >
 
-                <button
-                    type="button"
-                    id="remover-foto-personagem"
-                    class="remover-foto"
-                >
-                    Remover
-                </button>
+        <!-- Remover -->
+        <button
+            type="button"
+            id="remover-foto-legado"
+            class="remover-foto"
+            style="display: none;"
+        >
+            Remover
+        </button>
 
-            </div>
+    </div>
+
+</div>
 
 
             <!-- Foto do legado -->
