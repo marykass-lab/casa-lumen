@@ -926,62 +926,174 @@ function removerItem(botao) {
 }
 
 /* =========================
-   IMAGENS DA FICHA
+   ELEMENTOS DAS FOTOS
 ========================= */
 
-// Campo para selecionar
-// a foto do personagem
-const inputFotoPersonagem =
-    document.getElementById(
-        "input-foto-personagem"
-    );
+const inputFotoPersonagem = document.getElementById("input-foto-personagem");
+const fotoPersonagem = document.getElementById("foto-personagem");
+const textoFotoPersonagem = document.getElementById("texto-foto-personagem");
+const removerFotoPersonagem = document.getElementById("remover-foto-personagem");
 
-// Imagem do personagem
-const fotoPersonagem =
-    document.getElementById(
-        "foto-personagem"
-    );
+const inputFotoLegado = document.getElementById("input-foto-legado");
+const fotoLegado = document.getElementById("foto-legado");
+const textoFotoLegado = document.getElementById("texto-foto-legado");
+const removerFotoLegado = document.getElementById("remover-foto-legado");
 
-// Texto "+ Adicionar imagem"
-const textoFotoPersonagem =
-    document.getElementById(
-        "texto-foto-personagem"
-    );
+/* =========================
+   COMPRIMIR IMAGENS
+========================= */
 
-// Botão para remover
-// a foto do personagem
-const removerFotoPersonagem =
-    document.getElementById(
-        "remover-foto-personagem"
-    );
+function comprimirImagem(arquivo, larguraMaxima = 900, alturaMaxima = 900, qualidade = 0.75) {
 
+    return new Promise((resolve, reject) => {
 
-// Campo para selecionar
-// a foto do legado
-const inputFotoLegado =
-    document.getElementById(
-        "input-foto-legado"
-    );
+        const leitor = new FileReader();
 
-// Imagem do legado
-const fotoLegado =
-    document.getElementById(
-        "foto-legado"
-    );
+        leitor.onload = function(evento) {
 
-// Texto "+ Adicionar imagem"
-const textoFotoLegado =
-    document.getElementById(
-        "texto-foto-legado"
-    );
+            const imagem = new Image();
 
-// Botão para remover
-// a foto do legado
-const removerFotoLegado =
-    document.getElementById(
-        "remover-foto-legado"
-    );
+            imagem.onload = function() {
 
+                let largura = imagem.width;
+                let altura = imagem.height;
+
+                /* Reduz mantendo a proporção */
+                const proporcao = Math.min(
+                    larguraMaxima / largura,
+                    alturaMaxima / altura,
+                    1
+                );
+
+                largura = Math.round(largura * proporcao);
+                altura = Math.round(altura * proporcao);
+
+                /* Cria uma imagem temporária */
+                const canvas = document.createElement("canvas");
+
+                canvas.width = largura;
+                canvas.height = altura;
+
+                const contexto = canvas.getContext("2d");
+
+                contexto.drawImage(
+                    imagem,
+                    0,
+                    0,
+                    largura,
+                    altura
+                );
+
+                /*
+                    Converte para WebP comprimido.
+                    0.75 = 75% de qualidade.
+                */
+                const imagemComprimida = canvas.toDataURL(
+                    "image/webp",
+                    qualidade
+                );
+
+                resolve(imagemComprimida);
+            };
+
+            imagem.onerror = function() {
+                reject(new Error("Não foi possível carregar a imagem."));
+            };
+
+            imagem.src = evento.target.result;
+        };
+
+        leitor.onerror = function() {
+            reject(new Error("Não foi possível ler o arquivo."));
+        };
+
+        leitor.readAsDataURL(arquivo);
+    });
+}
+
+/* =========================
+   FOTO DO PERSONAGEM
+========================= */
+
+inputFotoPersonagem.addEventListener("change", async function(evento) {
+
+    const arquivo = evento.target.files[0];
+
+    if (!arquivo) {
+        return;
+    }
+
+    /* Aceita apenas imagens */
+    if (!arquivo.type.startsWith("image/")) {
+        alert("Selecione um arquivo de imagem.");
+        inputFotoPersonagem.value = "";
+        return;
+    }
+
+    try {
+
+        /* Comprime automaticamente */
+        fotoPersonagemBase64 = await comprimirImagem(arquivo);
+
+        /* Mostra a imagem */
+        mostrarImagem(
+            fotoPersonagem,
+            textoFotoPersonagem,
+            removerFotoPersonagem,
+            fotoPersonagemBase64
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert(
+            "Não foi possível carregar essa imagem. Tente outra foto."
+        );
+    }
+});
+
+/* =========================
+   FOTO DO LEGADO
+========================= */
+
+inputFotoLegado.addEventListener("change", async function(evento) {
+
+    const arquivo = evento.target.files[0];
+
+    if (!arquivo) {
+        return;
+    }
+
+    /* Aceita apenas imagens */
+    if (!arquivo.type.startsWith("image/")) {
+        alert("Selecione um arquivo de imagem.");
+        inputFotoLegado.value = "";
+        return;
+    }
+
+    try {
+
+        /* Comprime automaticamente */
+        fotoLegadoBase64 = await comprimirImagem(arquivo);
+
+        /* Mostra a imagem */
+        mostrarImagem(
+            fotoLegado,
+            textoFotoLegado,
+            removerFotoLegado,
+            fotoLegadoBase64
+        );
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert(
+            "Não foi possível carregar essa imagem. Tente outra foto."
+        );
+    }
+});
 
 /* =========================
    IMAGENS ATUAIS
@@ -1046,133 +1158,6 @@ function mostrarImagem(
             "none";
     }
 }
-
-
-/* =========================
-   FOTO DO PERSONAGEM
-========================= */
-
-inputFotoPersonagem.addEventListener(
-    "change",
-    function () {
-
-        // Pega o arquivo escolhido
-        const arquivo =
-            this.files[0];
-
-        // Se nenhum arquivo
-        // foi escolhido, para
-        if (!arquivo) {
-            return;
-        }
-
-        // Verifica se é imagem
-        if (
-            !arquivo.type.startsWith(
-                "image/"
-            )
-        ) {
-
-            alert(
-                "Selecione um arquivo de imagem."
-            );
-
-            return;
-        }
-
-        // Cria um leitor
-        // para transformar a imagem
-        // em Base64
-        const leitor =
-            new FileReader();
-
-        // Quando terminar de ler
-        leitor.onload =
-            function (evento) {
-
-                // Guarda a imagem
-                fotoPersonagemBase64 =
-                    evento.target.result;
-
-                // Mostra a imagem
-                mostrarImagem(
-                    fotoPersonagem,
-                    textoFotoPersonagem,
-                    removerFotoPersonagem,
-                    fotoPersonagemBase64
-                );
-            };
-
-        // Lê a imagem
-        leitor.readAsDataURL(
-            arquivo
-        );
-    }
-);
-
-
-/* =========================
-   FOTO DO LEGADO
-========================= */
-
-inputFotoLegado.addEventListener(
-    "change",
-    function () {
-
-        // Pega o arquivo escolhido
-        const arquivo =
-            this.files[0];
-
-        // Se nenhum arquivo
-        // foi escolhido, para
-        if (!arquivo) {
-            return;
-        }
-
-        // Verifica se é imagem
-        if (
-            !arquivo.type.startsWith(
-                "image/"
-            )
-        ) {
-
-            alert(
-                "Selecione um arquivo de imagem."
-            );
-
-            return;
-        }
-
-        // Cria um leitor
-        // para transformar a imagem
-        // em Base64
-        const leitor =
-            new FileReader();
-
-        // Quando terminar de ler
-        leitor.onload =
-            function (evento) {
-
-                // Guarda a imagem
-                fotoLegadoBase64 =
-                    evento.target.result;
-
-                // Mostra a imagem
-                mostrarImagem(
-                    fotoLegado,
-                    textoFotoLegado,
-                    removerFotoLegado,
-                    fotoLegadoBase64
-                );
-            };
-
-        // Lê a imagem
-        leitor.readAsDataURL(
-            arquivo
-        );
-    }
-);
-
 
 /* =========================
    REMOVER FOTO DO PERSONAGEM
